@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Apply</title>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="icon" href="../images/favicon.ico">
+    </head>
+
+
+    <body class="apply_body">
+
+       <header class="all_header">
+            <div class="main_header">
+                <div class="logo_block">
+                    <h1>APAM LLC</h1>
+                    <img src="../images/logo.png" alt="APAM logo">
+                </div>
+                <nav class="nav_block">
+                    <a href="../index.html">Home</a>
+                    <a href="../projects.html">Projects</a>
+                    <a href="../sels_school.html">Sels</a>
+                    <a href="../playground.html">Playground</a>
+                    <a href="../jobs.html">Jobs</a>
+                    <a href="../contact.html">Contact Us</a>
+                    <a href="../about.html">About Us</a>
+                </nav>
+            </div> 
+        </header>
+
+        <main class="apply_main">
+            <section class="apply_intro">
+                <h2>Application Form</h2>
+                <p>Tell us a little about yourself and the role you are interested in.</p>
+            </section>
+            <section class="apply_form_section">
+                <form class="apply_form">
+                    <h3>Personal Information</h3>
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+                    <h3>Position Details</h3>
+                    <label for="position">Position Applying For</label>
+                    <select id="position" name="position" required>
+                        <option>Teaching Staff</option>
+                        <option>Support / Administration</option>
+                        <option>Bus Driver</option>
+                        <option>Manager</option>
+                        <option>Other</option>
+                    </select>
+                    <label for="start_date">Available Start Date</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                    <h3>About You</h3>
+                    <label for="intro">Short Introduction</label>
+                    <textarea id="intro" name="intro" rows="4" required></textarea>
+                    <label for="experience">Experience / Skills</label>
+                    <textarea id="experience" name="experience" rows="5" required></textarea>
+                    <label for="motivation">Why Do You Want to Apply?</label>
+                    <textarea id="motivation" name="motivation" rows="4" required></textarea>
+                    <h3>Additional Information</h3>
+                    <label for="portfolio">Portfolio / Website</label>
+                    <input type="url" id="portfolio" name="portfolio">
+                    <label for="english_level">English Level</label>
+                    <select id="english_level" name="english_level" required>
+                        <option>Basic</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                        <option>Native / Fluent</option>
+                    </select>
+                    <label for="japanese_level">Japanese Level</label>
+                    <select id="japanese_level" name="japanese_level" required>
+                        <option>Basic</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                        <option>Native / Fluent</option>
+                    </select>
+                    <h3>Supporting Documents</h3>
+                    <label for="resume">Resume / CV Upload</label>
+                    <input type="file" id="resume" name="resume" required>
+                    <div class="checkbox_block">
+                        <input type="checkbox" id="agree" name="agree" required>
+                        <label for="agree">I agree to the <a href="../legal/privacy.html">privacy policy</a>.</label>
+                    </div>
+                    <button type="submit">Submit Application</button>
+                </form>
+            </section>
+        </main>
+
+        <footer class="main_footer">
+            <div class="footer_top">
+                <div class="footer_logo">
+                    <img src="../images/logo.png" alt="APAM logo">
+                    <span>APAM LLC</span>
+                </div>
+                <div class="footer_links">
+                    <a href="../legal/privacy.html">Privacy Policy</a>
+                    <a href="../legal/terms.html">Terms of Use</a>
+                </div>
+            </div>    
+            <div class="footer_bottom">
+                <p>2026 APAM LLC. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </body>
+
+</html>
