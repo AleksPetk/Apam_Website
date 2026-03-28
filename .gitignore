@@ -21,3 +21,6 @@ images/
 
 # Logs
 *.log
+
+# Sounds
+sounds/
