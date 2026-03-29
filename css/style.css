@@ -1147,6 +1147,7 @@ button:hover {
                 radial-gradient(circle, rgba(255, 0, 255, 0.08), transparent 40%);
     animation: moveGlow 20s linear infinite;
     z-index: 0;
+    pointer-events: none;
 }
 @keyframes moveGlow {
     0% { transform: rotate(0deg); }
@@ -1460,7 +1461,7 @@ button:hover {
     margin: 0 auto 25px;
     border-radius: 24px;
     border: 3px solid #00ffff;
-    background: linear-gradient(135deg, #330333, #111133);
+    background: linear-gradient(135deg, #330033, #111133);
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -1490,6 +1491,7 @@ button:hover {
 #start_btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 7px 0 rgba( 0, 0, 0, 0.5);
+    cursor: pointer;
 }
 #start_btn:active {
     transform: translateY(1px);
