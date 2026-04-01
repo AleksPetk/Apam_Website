@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Memory Cards</title>
+        <title>Reflex Challenge</title>
         <link rel="stylesheet" href="../css/style.css">
         <link rel="icon" href="../images/favicon.ico">
     </head>
@@ -30,17 +30,28 @@
                 </nav>
             </div>  
         </header>
-        <main class="memory_main">
-            <section class="memory_intro">
-                <h2>Memory Cards</h2>
-                <p>Find matching pairs. Try to remember and match all cards.</p>
+        <main class="reflex_main">
+            <section class="reflex_intro">
+                <h2>Reflex Challenge</h2>
+                <p>When the object turns color at the edge, press the correct arrow key
+                    (↑ ↓ ← →) based on its position.
+                </p>
             </section>
-            <section class="memory_game">
-                <p class="memory_status">Press start to begin.</p>
-                <button id="memory_start_btn">Start Game</button>
-                <div class="memory_grid" id="memory_grid">
+            <section class="reflex_game">
+                <p class="reflex_status">Press start to begin.</p>
+                <button id="reflex_start_btn">Start Game</button>
+                <div class="reflex_area" id="reflex_area">
+                    <div class="reflex_ball" id="reflex_ball"></div>
                 </div>
-                <p class="memory_result" id="memory_result">Matches: 0</p>
+                <div class="reflex_controls">
+                    <button data-dir="up">↑</button>
+                    <div>
+                        <button data-dir="left">←</button>
+                        <button data-dir="down">↓</button>
+                        <button data-dir="right">→</button>
+                    </div>
+                </div>
+                <p class="reflex_result" id="reflex_result">Score: 0</p>
             </section>        
         </main>
         <footer class="main_footer">

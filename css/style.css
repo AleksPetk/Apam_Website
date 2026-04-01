@@ -1506,6 +1506,304 @@ button:hover {
 
 /* Reaction Game End */
 
+/* Memory Game */
+
+.memory_main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+    text-align: center;
+}
+.memory_intro h2 {
+    font-size: 44px;
+    color: #ffccff;
+    text-shadow: 0 0 10px rgba(255, 150, 255, 0.7);
+    margin-bottom: 10px;
+}
+.memory_intro p {
+    font-size: 18px;
+    color: #e6faff;
+    margin-bottom: 25px;
+}
+.memory_game {
+    background: linear-gradient(180deg, rgba(20, 10, 40, 0.95), rgba(10, 0, 25, 0.95));
+    border: 2px solid #ff99ff;
+    border-radius: 24px;
+    padding: 25px 15px;
+    box-shadow: 0 0 20px rgba(255, 150, 255, 0.25);
+}
+.memory_status {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+.memory_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    max-width: 500px;
+    margin: 20px auto 20px;
+}
+.memory_card {
+    height: 90px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #4444aa, #882288);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    user-select: none;
+    transition: 0.25s;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+}
+.memory_card span {
+    visibility: hidden;
+}
+.memory_card.revealed span,
+.memory_card.matched span {
+    visibility: visible;
+}
+.memory_card:hover {
+    transform: scale(1.05);
+}
+.memory_card.revealed {
+    background: linear-gradient(135deg, #00ccff, #cc00ff);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+.memory_card.matched {
+    background: linear-gradient(135deg, #00ff99, #00cc66);
+    box-shadow: 0 0 15px rgba(0, 255, 150, 0.6);
+    cursor: default;
+}
+.memory_result {
+    font-size: 20px;
+    color: #ffff99;
+    min-height: 25px;
+}
+#memory_start_btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    background: linear-gradient(135deg, #ffccff, #00ccff);
+    border: 2px solid #111;
+    border-radius: 16px;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+/* Memory Game End */
+
+/* Reflex Game */
+
+.reflex_main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+    text-align: center;
+}
+.reflex_intro h2 {
+    font-size: 44px;
+    color: #66ffcc;
+    text-shadow: 0 0 12px rgba(100, 255, 200, 0.7);
+    margin-bottom: 10px;
+}
+.reaction_intro p {
+    font-size: 18px;
+    color: #e6faff;
+    margin-bottom: 25px;
+}
+.reflex_game {
+    background: linear-gradient(180deg, rgba(0, 20, 30, 0.95), rgba(0, 10, 20, 0.95));
+    border: 2px solid #66ffcc;
+    border-radius: 24px;
+    padding: 25px 15px;
+    box-shadow: 0 0 20px rgba(100, 255, 200, 0.25);
+}
+.reflex_status {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+#reflex_start_btn {
+    margin-bottom: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    background: linear-gradient(135deg, #66ffcc, #00ccff);
+    border: 2px solid #111;
+    border-radius: 16px;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: 0.15s;
+}
+#reflex_start_btn:hover {
+    transform: translateY(-2px);
+}
+#reflex_start_btn:active {
+    transform: translateY(1px);
+}
+.reflex_area {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    margin: 0 auto 20px;
+    position: relative;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: radial-gradient(circle at center, #001a22, #000a10);
+    overflow: hidden;
+}
+.reflex_ball {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #66ffcc, #00ccff);
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 12px rgba(100, 255, 200, 0.6);
+    transition: background 0.1s, box-shadow 0.1s;
+}
+.reflex_ball.active {
+    background: linear-gradient(135deg, #ff6666, #ff0000);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+.reflex_result {
+    font-size: 20px;
+    color: #ffff99;
+    min-height: 25px;
+}
+.reflex_controls {
+    margin-top: 20px;
+    text-align: center;
+}
+.reflex_controls button {
+    font-size: 24px;
+    padding: 10px 16px;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    background: #00ccff;
+    color: black;
+    cursor: pointer;
+}
+.reflex_controls button:active {
+    transform: scale(0.9);
+}
+
+/* Reflex Game End */
+
+/* Dice Game */
+
+.dice_main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+    text-align: center;
+}
+.dice_intro h2 {
+    font-size: 44px;
+    color: #ffcc00;
+    text-shadow: 0 0 15px rgba(255, 200, 0, 0.8);
+    margin-bottom: 10px;
+}
+.dice_intro p {
+    font-size: 18px;
+    color: #fff5cc;
+    margin-bottom: 25px;
+}
+.dice_game {
+    background: linear-gradient(180deg, #1a0033, #000014);
+    border: 2px solid #ffcc00;
+    border-radius: 24px;
+    padding: 25px 15px;
+    box-shadow: 0 0 25px rgba(255, 200, 0, 0.3);
+}
+.dice_status {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+#dice_start_btn {
+    margin-bottom: 20px;
+    padding: 14px 26px;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+    background: linear-gradient(135deg, #ffcc00, #ff6600);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: 0.15s;
+}
+#dice_start_btn:hover {
+    transform: translateY(-3px);
+}
+#dice_start_btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+}
+.dice_box {
+    margin: 20px auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    background: radial-gradient(circle, #330066, #000022);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(255, 200, 0, 0.3);
+}
+.dice {
+    font-size: 70px;
+    transition: transform 0.4s ease;
+}
+.dice.spin {
+    animation: diceSpin 0.6s linear infinite;
+}
+@keyframes diceSpin {
+    0% {transform: rotate(0deg) scale(1);}
+    50% {transform: rotate(180deg) scale(1.2);}
+    100% {transform: rotate(360deg) scale(1);}
+}
+.dice_result {
+    font-size: 22px;
+    color: #ffff99;
+    margin-top: 10px;
+}
+.dice_phrase {
+    position: relative;
+    margin-top: 20px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    min-height: 40px;
+}
+.dice_phrase.show {
+    animation: phraseDrop 0.8s ease;
+}
+@keyframes phraseDrop {
+    0% {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(10px) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+}
+
+/* Dice Game End */
 
 /*-------------------------------------------------------------------------------------------------*/
 /* GAMES CSS END */

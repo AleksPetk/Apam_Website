@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Memory Cards</title>
+        <title>Dice Game</title>
         <link rel="stylesheet" href="../css/style.css">
         <link rel="icon" href="../images/favicon.ico">
     </head>
@@ -30,18 +30,20 @@
                 </nav>
             </div>  
         </header>
-        <main class="memory_main">
-            <section class="memory_intro">
-                <h2>Memory Cards</h2>
-                <p>Find matching pairs. Try to remember and match all cards.</p>
+        <main class="dice_main">
+            <section class="dice_intro">
+                <h2>Lucky Dice 🎲</h2>
+                <p>Press start and test your luck. Will you hit 6 or get unlucky?</p>
             </section>
-            <section class="memory_game">
-                <p class="memory_status">Press start to begin.</p>
-                <button id="memory_start_btn">Start Game</button>
-                <div class="memory_grid" id="memory_grid">
+            <section class="dice_game">
+                <p class="dice_status">Press start to roll the dice.</p>
+                <button id="dice_start_btn">Roll Dice</button>
+                <div class="dice_box">
+                    <div class="dice" id="dice">🎲</div>
                 </div>
-                <p class="memory_result" id="memory_result">Matches: 0</p>
-            </section>        
+                <div class="dice_result" id="dice_result">Result: -</div>
+                <div class="dice_phrase" id="dice_phrase"></div>
+            </section>
         </main>
         <footer class="main_footer">
             <div class="footer_top">
