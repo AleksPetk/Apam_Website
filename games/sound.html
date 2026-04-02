@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sound Check</title>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="icon" href="../images/favicon.ico">
+    </head>
+
+
+    <body class="playground_body">
+
+       <header class="all_header">
+            <div class="main_header">
+                <div class="logo_block">
+                    <h1>APAM LLC</h1>
+                    <img src="../images/logo.png" alt="APAM logo">
+                </div>
+                <nav class="nav_block">
+                    <a href="../index.html">Home</a>
+                    <a href="../projects.html">Projects</a>
+                    <a href="../sels_school.html">Sels</a>
+                    <a href="../playground.html">Playground</a>
+                    <a href="../jobs.html">Jobs</a>
+                    <a href="../contact.html">Contact Us</a>
+                    <a href="../about.html">About Us</a>
+                </nav>
+            </div>  
+        </header>
+        <main class="sound_main">
+            <section class="sound_intro">
+                <h2>Sound Check 🔊</h2>
+                <p>
+                    Listen carefully and repeat the sequence using left and right.
+                </p>
+                <p class="sound_rules">
+                    Round 1: 3 sounds (easy)<br>
+                    Round 2: 5 sounds (medium)<br>
+                    Round 3: 7 sounds (hard)<br>
+                    Volume gets lower and speed increases.
+                </p>
+            </section>
+            <section class="sound_game">
+                <p class="sound_status">Press start and listen.</p>
+                <button id="sound_start_btn">Start Game</button>
+                <div class="sound_visual">
+                    <div class="sound_wave" id="sound_wave"></div>
+                </div>
+                <div class="sound_progress" id="sound_progress"></div>
+                <div class="sound_controls">
+                    <button data-dir="left">⬅</button>
+                    <button data-dir="right">➡</button>
+                </div>
+                <div class="sound_result" id="sound_result"></div>
+            </section>      
+        </main>
+        <footer class="main_footer">
+            <div class="footer_top">
+                <div class="footer_logo">
+                    <img src="../images/logo.png" alt="APAM logo">
+                    <span>APAM LLC</span>
+                </div>
+                <div class="footer_links">
+                    <a href="../legal/privacy.html">Privacy Policy</a>
+                    <a href="../legal/terms.html">Terms of Use</a>
+                </div>
+            </div>    
+            <div class="footer_bottom">
+                <p>2026 APAM LLC. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="../js/games.js"></script>
+    </body>
+    
+</html>

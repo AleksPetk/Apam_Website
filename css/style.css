@@ -1805,6 +1805,143 @@ button:hover {
 
 /* Dice Game End */
 
+/* Eye Focus */
+
+.focus_main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+    text-align: center;
+}
+.focus_intro h2 {
+    font-size: 44px;
+    color: #9dff8a;
+    text-shadow: 0 0 12px rgba(157, 255, 138, 0.7);
+    margin-bottom: 10px;
+}
+.focus_intro p {
+    font-size: 18px;
+    color: #eaffea;
+    margin-bottom: 25px;
+}
+.focus_game {
+    background: linear-gradient(180deg, rgba(10, 30, 10, 0.95), rgba(0, 15, 20, 0.95));
+    border: 2px solid #9dff8a;
+    border-radius: 24px;
+    padding: 25px 15px;
+    box-shadow: 0 0 20px rgba(157, 255, 138, 0.2);
+}
+.focus_status {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+#focust_start_btn {
+    margin-bottom: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    background: linear-gradient(135deg, #9dff8a, #66ffcc);
+    border: 2px solid #111;
+    border-radius: 16px;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: 0.15s;
+}
+#focus_start_btn:hover {
+    transform: translateY(-2px);
+}
+#focus_start_btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+}
+.focus_timer {
+    width: 100%;
+    max-width: 420px;
+    height: 16px;
+    margin: 0 auto 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+.focus_timer_bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #9dff8a, #66ffcc, #00ccff);
+    border-radius: 999px;
+    transition: width 0.1s linear;
+}
+.focus_grid {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 28px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    justify-items: center;
+}
+.focus_item {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #66ffcc;
+    box-shadow: 0 0 10px rgba(102, 255, 204, 0.25);
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s;
+}
+.focus_item:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 16px rgba(102, 255, 204, 0.45);
+}
+.focus_item.color-diff {
+    background: #7dffd9;
+}
+.focus_item.size-diff {
+    width: 56px;
+    height: 56px;
+}
+.focus_item.shape-diff {
+    width: 61px;
+    height: 58px;
+    border-radius: 48%;
+}
+.focus_item.correct {
+    background: linear-gradient(135deg, #9dff8a, #00ff99);
+    box-shadow: 0 0 18px rgba(0, 255, 153, 0.6);
+}
+.focus_item.wrong {
+    background: linear-gradient(135deg, #ff6666, #ff0033);
+    box-shadow: 0 0 18px rgba(255, 0, 51, 0.6);
+}
+.focus_result {
+    min-height: 32px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff799;
+}
+@media (max-width: 520px) {
+    .focus_grid {
+        max-width: 320px;
+        gap: 9px;
+    }
+    .focus_item {
+        width: 44px;
+        height: 44px;
+    }
+    .focus_item.size-diff {
+        width: 40px;
+        height: 40px;
+    }
+    .focus_item.shape-diff {
+        width: 48px;
+        height: 42px;
+    }
+}
+
+/* Eye Focus End */
+
 /*-------------------------------------------------------------------------------------------------*/
 /* GAMES CSS END */
 /*-------------------------------------------------------------------------------------------------*/

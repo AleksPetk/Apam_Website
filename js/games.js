@@ -620,3 +620,138 @@ if (dice) {
 }
 
 //------------------------- DICE GAME END ---------------------------------------------------------
+
+//------------------------- EYE FOCUS -------------------------------------------------------------
+
+const focusGrid = document.getElementById("focus_grid");
+
+if (focusGrid) {
+
+    const focusStartBtn = document.getElementById("focus_start_btn");
+    const focusStatus = document.querySelector(".focus_status");
+    const focusResult = document.getElementById("focus_result");
+    const timerBar = document.getElementById("focus_timer_bar");
+
+    const TOTAL_TIME = 6000;
+    const GRID_SIZE = 25;
+
+    const bg_Music = new Audio("../sounds/success.mp3");
+
+    let gameRunning = false;
+    let round = 0;
+    let startTime = 0;
+    let timerInterval = null;
+    let targetIndex = null;
+
+    function startGame() {
+        bg_Music.currentTime = 0;
+        bg_Music.play();
+
+        gameRunning = true;
+        round = 0;
+        startTime = Date.now();
+        focusResult.textContent = "";
+        focusStatus.textContent = "Round 1";
+
+        startTimer();
+        nextRound();
+    }
+
+    function startTimer() {
+        timerBar.style.width = "100%";
+
+        timerInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const remaining = TOTAL_TIME - elapsed;
+
+            if (remaining <= 0) {
+                endGame();
+                return;
+            }
+
+            const percent = (remaining / TOTAL_TIME) * 100;
+            timerBar.style.width = percent + "%";
+        }, 50);
+    }
+
+    function nextRound() {
+        if (!gameRunning) return;
+
+        round++;
+
+        if (round > 3) {
+            endGame(true);
+            return;
+        }
+
+        focusStatus.textContent = "Round " + round;
+        focusGrid.innerHTML = "";
+        targetIndex = Math.floor(Math.random() * GRID_SIZE);
+
+        for(let i = 0; i < GRID_SIZE; i++) {
+            const item = document.createElement("div");
+            item.classList.add("focus_item");
+
+            if (i === targetIndex) {
+                if (round === 1) item.classList.add("color-diff");
+                if (round === 2) item.classList.add("size-diff");
+                if (round === 3) item.classList.add("shape-diff");
+            }
+
+            item.addEventListener("click", () => handleClick(i, item));
+
+            focusGrid.appendChild(item);
+        }
+    }
+
+    function handleClick(index, element) {
+        if (!gameRunning) return;
+        
+        if (index === targetIndex) {
+            element.classList.add("correct");
+
+            setTimeout(() => {
+                nextRound();
+            }, 50);
+        } else {
+            element.classList.add("wrong");
+            endGame();
+        }
+    }
+
+    function endGame(success = false) {
+        if (!gameRunning) return;
+
+        gameRunning = false;
+        clearInterval(timerInterval);
+
+        const elapsed = Date.now() - startTime;
+
+        let rating = "";
+        let completed = success ? 3 : (round - 1);
+
+        bg_Music.pause();
+
+        if (completed <= 0) {
+            rating = "💀 Nothing done";
+        } else if (completed === 1) {
+            rating = "😅 Not great";
+        } else if (completed === 2) {
+            rating = "👍 Good";
+        } else if (completed === 3) {
+            if (elapsed < 3000) rating = "⚡ INSANE";
+            else if (elapsed < 4000) rating = "🔥 Amazing";
+            else if (elapsed < 5000) rating = "😎 Very Good";
+            else rating = "🙂 Completed"; 
+        }
+        if (success) {
+            focusResult.textContent = "Time: " + (elapsed / 1000).toFixed(2) + "s - " + rating;
+        } else {
+            focusResult.textContent = "Rounds: " + completed + "/3 - " + rating;
+        }
+        focusStatus.textContent = "Game Over";
+    }
+    focusStartBtn.addEventListener("click", startGame);
+}
+
+//------------------------- EYE FOCUS END ----------------------------------------------------------
