@@ -755,3 +755,187 @@ if (focusGrid) {
 }
 
 //------------------------- EYE FOCUS END ----------------------------------------------------------
+
+//------------------------- SOUND CHECK ------------------------------------------------------------
+
+const soundWave = document.getElementById("sound_wave");
+
+if (soundWave) {
+    const soundStartBtn = document.getElementById("sound_start_btn");
+    const soundStatus = document.querySelector(".sound_status");
+    const soundProgress = document.getElementById("sound_progress");
+    const soundResult = document.getElementById("sound_result");
+    const soundControls = document.querySelectorAll(".sound_controls button");
+
+    const bgMusic = new Audio("../sounds/reaction_bg.mp3");
+    const leftSound = new Audio("../sounds/left.mp3");
+    const rightSound = new Audio("../sounds/right.mp3");
+
+    bgMusic.loop = true;
+    bgMusic.volume = 0.2;
+
+    let round = 0;
+    let gameRunning = false;
+    let listening = false;
+    let sequence = [];
+    let playerInput = [];
+
+    const roundsConfig = [
+        {length: 3, volume: 1.0, rate: 1.0},
+        {length: 5, volume: 0.5, rate: 1.0},
+        {length: 7, volume: 0.3, rate: 1.5}
+    ];
+
+    function randomDir() {
+        return Math.random() < 0.5 ? "left" : "right"; 
+    }
+
+    function makeSequence(length) {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+            arr.push(randomDir());
+        }
+        return arr;
+    }
+
+    function pulseWave() {
+        soundWave.classList.remove("active");
+        void soundWave.offsetWidth;
+        soundWave.classList.add("active");
+    }
+
+    function playOne(dir, volume, rate) {
+        const sound = dir === "left" ? leftSound : rightSound;
+        sound.pause();
+        sound.currentTime = 0;
+        sound.volume = volume;
+        sound.playbackRate = rate;
+        sound.play();
+        pulseWave();
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function playSequence() {
+        listening = true;
+        soundStatus.textContent = "Listen carefully...";
+        soundProgress.textContent = "";
+
+        const config = roundsConfig[round];
+
+        for (let i = 0; i < sequence.length; i++) {
+            playOne(sequence[i], config.volume, config.rate);
+            await sleep(550 / config.rate);
+        }
+
+        listening = false;
+        soundStatus.textContent = "Repeat the sequence.";
+    }
+
+    function showPlayerInput() {
+        soundProgress.textContent = playerInput.map(v => v === "left" ? "L" : "R").join(" ");
+    }
+
+    function endGame(completedRounds) {
+        gameRunning = false;
+        listening = false;
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+
+        let rating = "";
+        let phrase = "";
+
+        if(completedRounds === 0) {
+            rating = "💀 BAD";
+            phrase = "No ears today.";
+        } else if (completedRounds === 1) {
+            rating = "😅 NOT BAD";
+            phrase = "You heard something at least. Not deaf!"
+        } else if (completedRounds === 2) {
+            rating = "🔥 GOOD";
+            phrase = "Solid ears. Respect."
+        } else {
+            rating = "👑 AMAZING";
+            phrase = "Your ears are elite."
+        }
+
+        soundStatus.textContent = "Game Over";
+        soundResult.textContent = "Rounds passed: " + completedRounds + "/3 - " + rating + " - " + phrase;
+    }
+
+    function handleInput(dir) {
+        if (!gameRunning || listening) return;
+
+        playerInput.push(dir);
+        showPlayerInput();
+
+        const currentIndex = playerInput.length - 1;
+
+        if (playerInput[currentIndex] !== sequence[currentIndex]) {
+            endGame(round);
+            return;
+        }
+
+        if (playerInput.length === sequence.length) {
+            round++;
+
+            if (round >= 3) {
+                endGame(3);
+                return;
+            }
+
+            sequence = makeSequence(roundsConfig[round].length);
+            playerInput = [];
+            soundStatus.textContent = "Nice! Next round...";
+            soundProgress.textContent = "";
+
+            setTimeout(() => {
+                playSequence();
+            }, 250);
+        }
+    }
+
+    function startSoundGame() {
+        round = 0;
+        gameRunning = true;
+        listening = false;
+        playerInput = [];
+        soundResult.textContent = "";
+        soundProgress.textContent = "";
+        soundStatus.textContent = "Get ready...";
+
+        bgMusic.currentTime = 0;
+        bgMusic.play();
+
+        sequence = makeSequence(roundsConfig[0].length);
+
+        setTimeout(() => {
+            playSequence();
+        }, 300);
+    }
+
+    soundStartBtn.addEventListener("click", startSoundGame);
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") handleInput("left");
+        if (e.key === "ArrowRight") handleInput("right");
+    });
+
+    soundControls.forEach(btn => {
+        btn.addEventListener("click", () => {
+            handleInput(btn.dataset.dir);
+        });
+    });
+
+
+}
+
+//------------------------- SOUND CHECK END --------------------------------------------------------
+
+//------------------------- THINK DIFFERENT --------------------------------------------------------
+
+
+
+//------------------------- THINK DIFFERENT END ----------------------------------------------------
