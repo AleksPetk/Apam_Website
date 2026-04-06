@@ -936,6 +936,328 @@ if (soundWave) {
 
 //------------------------- THINK DIFFERENT --------------------------------------------------------
 
+const thinkArea = document.getElementById("think_challenge");
 
+if (thinkArea) {
+    const statusEl = document.getElementById("think_status");
+    const startBtn = document.getElementById("think_start_btn");
+    const timerBar = document.getElementById("think_timer_bar");
+    const instructionEl = document.getElementById("think_instruction");
+    const optionsEl = document.getElementById("think_options");
+    const decodeEl = document.getElementById("think_decode");
+    const resultEl = document.getElementById("think_result");
+
+    const TOTAL_TIME = 8000;
+    let startTime = 0;
+    let timerInterval = null;
+    let gameRunning = false;
+
+    function randInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function clearUI() {
+        instructionEl.textContent = "";
+        optionsEl.innerHTML = "";
+        decodeEl.innerHTML = "";
+        resultEl.textContent = "";
+    }
+
+    function startTimer() {
+        timerBar.style.width = "100%";
+        startTime = Date.now();
+
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const remaining = TOTAL_TIME - elapsed;
+
+            if (remaining <= 0) {
+                endGame(false, "⏱️ Time out!");
+                return;
+            }
+
+            const percent = (remaining / TOTAL_TIME) * 100;
+            timerBar.style.width = percent + "%";
+        }, 50);
+    }
+
+    function endGame(correct, msg = "") {
+        if (!gameRunning) return;
+
+        gameRunning = false;
+        clearInterval(timerInterval);
+        disableAllOptions();
+        startBtn.disabled = false;
+
+        const time = ((Date.now() - startTime) / 1000).toFixed(2);
+
+        if (correct) {
+            resultEl.textContent = "✔ Correct — " + time + "s";
+            statusEl.textContent = "Nice!";
+        } else {
+            if (msg === "⏱️ Time out!") {
+                resultEl.textContent = "✖ " + msg;
+                statusEl.textContent = "Too slow";
+            } else {
+                resultEl.textContent = "✖ Incorrect - " + msg;
+                statusEl.textContent = "Try again"; 
+            }
+        }
+    }
+
+    function makeOption(text, isCorrect, clickHandler = null) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "think_option_btn";
+        btn.textContent = text;
+        btn.dataset.correct = isCorrect ? "true" : "false";
+
+        btn.addEventListener("click", () => {
+            if (!gameRunning) return;
+
+            if (clickHandler) {
+                clickHandler(btn, isCorrect);
+                return;
+            }
+            if (isCorrect) {
+                btn.classList.add("correct");
+                endGame(true);
+            }
+            else {
+                btn.classList.add("wrong");
+                revealCorrectOption();
+                endGame(false, "Wrong answer");
+            }
+        });
+        optionsEl.appendChild(btn);
+        return btn;
+    }
+
+    function disableAllOptions() {
+        const buttons = optionsEl.querySelectorAll(".think_option_btn");
+        buttons.forEach((btn) => {
+            btn.disabled = true;
+            btn.style.cursor = "default";
+        });
+    }
+
+    function revealCorrectOption() {
+        const correctBtn = optionsEl.querySelector('[data-correct="true"]');
+        if (correctBtn) {
+            correctBtn.classList.add("correct");
+        }
+    }
+
+    function ordinal(num) {
+        const mod10 = num % 10;
+        const mod100 = num % 100;
+
+        if (mod10 === 1 && mod100 !== 11) return num + "st";
+        if (mod10 === 2 && mod100 !== 12) return num + "nd";
+        if (mod10 === 3 && mod100 !== 13) return num + "rd";
+        return num + "th";
+    }
+
+    function toSuperscript(num) {
+        const map = {
+            "0": "⁰",
+            "1": "¹",
+            "2": "²",
+            "3": "³",
+            "4": "⁴",
+            "5": "⁵",
+            "6": "⁶",
+            "7": "⁷",
+            "8": "⁸",
+            "9": "⁹"
+        };
+        return String(num).split("").map((char) => map[char] || char).join("");
+    }
+
+    function buildAlphabetPuzzle() {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        const targetIndex = randInt(1, 26);
+        const correctLetter = alphabet[targetIndex - 1];
+
+        instructionEl.textContent = ordinal(targetIndex) + " letter";
+        decodeEl.textContent = "";
+
+        const optionPool = [correctLetter];
+
+        while (optionPool.length < 5) {
+            const randomLetter = alphabet[randInt(0, 25)];
+            if (!optionPool.includes(randomLetter)) {
+                optionPool.push(randomLetter);
+            }
+        }
+        shuffle(optionPool).forEach((letter) => {
+            makeOption(letter, letter === correctLetter);
+        });
+    }
+
+    function makeMathExpression() {
+        const type = randInt(1, 3);
+
+        if (type === 1) {
+            const base = randInt(2, 12);
+            const power = randInt(2, 3);
+            return {
+                text: base + toSuperscript(power),
+                value: base ** power
+            };
+        }
+
+        if (type === 2) {
+            const num = randInt(3, 6);
+            let value = 1;
+
+            for (let i = 2; i <= num; i++) {
+                value *= i;
+            }
+
+            return {
+                text: num + "!",
+                value: value
+            };
+        }
+
+        const root = randInt(2, 12);
+        const square = root * root;
+
+        return {
+            text: "√" + square,
+            value: root
+        };
+    }
+
+    function buildMathPuzzle() {
+        const mode = Math.random() < 0.5 ? "largest" : "smallest";
+        const expressions = [];
+        const usedValues = new Set();
+        const usedTexts = new Set();
+
+        while (expressions.length < 4) {
+            const expr = makeMathExpression();
+
+            if (!usedValues.has(expr.value) && !usedTexts.has(expr.text)) {
+                expressions.push(expr);
+                usedValues.add(expr.value);
+                usedTexts.add(expr.text);
+            }
+        }
+
+        let correctValue = expressions[0].value;
+
+        for (let i = 1; i < expressions.length; i++) {
+            if (mode === "largest" && expressions[i].value > correctValue) {
+                correctValue = expressions[i].value;
+            }
+
+            if (mode === "smallest" && expressions[i].value < correctValue) {
+                correctValue = expressions[i].value;
+            }
+        }
+        
+        instructionEl.textContent = mode === "largest" ? "BIGGEST" : "SMALLEST";
+        decodeEl.textContent = "";
+
+        shuffle(expressions).forEach((expr) => {
+            makeOption(expr.text, expr.value === correctValue);
+        });
+    }
+
+    function buildDecodePuzzle() {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        const letters = shuffle([...alphabet]).slice(0, 5);
+        const numbers = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 5);
+
+        const map = {};
+        for (let i = 0; i < letters.length; i++) {
+            map[letters[i]] = numbers[i];
+        }
+
+        const answerLetters = shuffle([...letters]).slice(0, randInt(3, 4));
+        const answerNumbers = answerLetters.map((letter) => map[letter]);
+
+        let currentStep = 0;
+
+        instructionEl.textContent = answerNumbers.join(" ");
+        renderDecodeInfo(map, answerLetters, currentStep);
+
+        shuffle([...letters]).forEach((letter) => {
+            makeOption(letter, false, (btn) => {
+                if (!gameRunning) return;
+
+                const expectedLetter = answerLetters[currentStep];
+
+                if (letter === expectedLetter) {
+                    btn.classList.add("correct");
+                    btn.disabled = true;
+                    btn.style.cursor = "default";
+                    currentStep++;
+                    renderDecodeInfo(map, answerLetters, currentStep);
+
+                    if (currentStep === answerLetters.length) {
+                        endGame(true);
+                    }
+                } else {
+                    btn.classList.add("wrong");
+                    showDecodeAnswer(answerLetters);
+                    endGame(false, "Wrong order");
+                }
+            });
+        });
+    }
+
+    function renderDecodeInfo(map, answerLetters, currentStep) {
+        const pairs = Object.entries(map).map(([letter, number]) => letter + "=" + number).join(" ");
+        const progress = answerLetters.map((letter, index) => {
+            if (index < currentStep) return letter;
+            return "_";
+        }).join(" ");
+        decodeEl.innerHTML = pairs + "<br>" + progress;
+    }
+
+    function showDecodeAnswer(answerLetters) {
+        decodeEl.innerHTML += "<br>" + answerLetters.join(" ");
+    }
+
+    function buildRandomPuzzle() {
+        clearUI();
+
+        const puzzleType = randInt(1, 3);
+        if (puzzleType === 1) {
+            buildAlphabetPuzzle();
+        } else if (puzzleType === 2) {
+            buildMathPuzzle();
+        } else {
+            buildDecodePuzzle();
+        }
+    }
+
+    function startThinkGame() {
+        gameRunning = true;
+        startBtn.disabled = true;
+        statusEl.textContent = "Think fast";
+        timerBar.style.width = "100%";
+
+        buildRandomPuzzle();
+        startTimer();
+    }
+
+    startBtn.addEventListener("click", () => {
+        if (gameRunning) return;
+        startThinkGame();
+    });
+}
 
 //------------------------- THINK DIFFERENT END ----------------------------------------------------
